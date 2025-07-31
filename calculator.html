@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic JS Calculator</title>
+  <style>
+    body {
+      background: #f2f2f2;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .calculator {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 300px;
+    }
+
+    .display {
+      width: 100%;
+      height: 60px;
+      font-size: 1.8rem;
+      padding: 10px;
+      text-align: right;
+      border: none;
+      background: #222;
+      color: #fff;
+      border-radius: 6px;
+      margin-bottom: 15px;
+    }
+
+    .btns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 16px;
+      font-size: 1.2rem;
+      background: #e7e7e7;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #dcdcdc;
+    }
+
+    .op {
+      background: #ff9248;
+      color: white;
+    }
+
+    .op:hover {
+      background: #e0762c;
+    }
+
+    .equal {
+      background: #28a745;
+      color: white;
+    }
+
+    .equal:hover {
+      background: #1f8f39;
+    }
+
+    .clear {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .clear:hover {
+      background: #c0392b;
+    }
+
+    @media(max-width: 400px) {
+      .calculator {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <!-- Display Area -->
+    <input type="text" class="display" id="screen" disabled placeholder="0"/>
+
+    <!-- Buttons Grid -->
+    <div class="btns">
+      <button class="btn clear" onclick="clearAll()">C</button>
+      <button class="btn" onclick="appendVal('(')">(</button>
+      <button class="btn" onclick="appendVal(')')">)</button>
+      <button class="btn op" onclick="appendVal('/')">÷</button>
+
+      <button class="btn" onclick="appendVal('7')">7</button>
+      <button class="btn" onclick="appendVal('8')">8</button>
+      <button class="btn" onclick="appendVal('9')">9</button>
+      <button class="btn op" onclick="appendVal('*')">×</button>
+
+      <button class="btn" onclick="appendVal('4')">4</button>
+      <button class="btn" onclick="appendVal('5')">5</button>
+      <button class="btn" onclick="appendVal('6')">6</button>
+      <button class="btn op" onclick="appendVal('-')">−</button>
+
+      <button class="btn" onclick="appendVal('1')">1</button>
+      <button class="btn" onclick="appendVal('2')">2</button>
+      <button class="btn" onclick="appendVal('3')">3</button>
+      <button class="btn op" onclick="appendVal('+')">+</button>
+
+      <button class="btn" onclick="appendVal('0')">0</button>
+      <button class="btn" onclick="appendVal('.')">.</button>
+      <button class="btn equal" onclick="calculate()">=</button>
+      <button class="btn" onclick="backspace()">⌫</button>
+    </div>
+  </div>
+
+  <script>
+    const screen = document.getElementById("screen");
+
+    function appendVal(value) {
+      screen.value += value;
+    }
+
+    function clearAll() {
+      screen.value = "";
+    }
+
+    function backspace() {
+      screen.value = screen.value.slice(0, -1);
+    }
+
+    function calculate() {
+      try {
+        screen.value = eval(screen.value);
+      } catch {
+        screen.value = "Error";
+      }
+    }
+
+    // Optional: Keyboard support
+    document.addEventListener('keydown', function(e) {
+      const allowed = "0123456789+-*/().";
+      if (allowed.includes(e.key)) {
+        appendVal(e.key);
+      } else if (e.key === 'Enter') {
+        calculate();
+      } else if (e.key === 'Backspace') {
+        backspace();
+      } else if (e.key === 'Escape') {
+        clearAll();
+      }
+    });
+  </script>
+
+</body>
+</html>
